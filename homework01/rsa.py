@@ -12,8 +12,10 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
-    # PUT YOUR CODE HERE
-    pass
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
 
 
 def gcd(a: int, b: int) -> int:
@@ -47,10 +49,10 @@ def generate_keypair(
     elif p == q:
         raise ValueError("p and q cannot be equal")
 
-    n = p*q
+    # n = p*q
     # PUT YOUR CODE HERE
 
-    phi = (p - 1)(q - 1)
+    # phi = (p - 1)(q - 1)
     # PUT YOUR CODE HERE
 
     # Choose an integer e such that e and phi(n) are coprime

@@ -66,7 +66,7 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
         if utf_A <= syl_utf <= utf_Z:
             code = syl_utf - shift
             if code < utf_A:
-                code = utf_Z - utf_A % code  + 1
+                code = utf_Z - utf_A % code + 1
             syl = chr(code)
 
         elif utf_a <= syl_utf <= utf_z:
