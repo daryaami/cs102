@@ -9,7 +9,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    
+
     utf_A, utf_Z = 65, 90
     utf_a, utf_z = 97, 122
 
@@ -33,7 +33,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
             if code > utf_z:
                 code = utf_a + code % utf_z - 1
             syl = chr(code)
-        
+
         ciphertext += syl
 
     return ciphertext
@@ -50,7 +50,7 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-    
+
     utf_A, utf_Z = 65, 90
     utf_a, utf_z = 97, 122
 
