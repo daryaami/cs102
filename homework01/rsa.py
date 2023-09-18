@@ -12,6 +12,8 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
+    if n <= 1:
+        return False
     for i in range(2, n):
         if n % i == 0:
             return False
@@ -36,18 +38,27 @@ def gcd(a: int, b: int) -> int:
 
 def multiplicative_inverse(e: int, phi: int) -> int:
     """
-    Euclid's extended algorithm for finding the multiplicative
-    inverse of two numbers.
-    >>> multiplicative_inverse(7, 40)
-    23
+    Вычисляет мультипликативную инверсию `d` для `e` по модулю `phi`.
     """
-    # PUT YOUR CODE HERE
-    pass
+    x1, x2 = 0, 1
+    original_phi = phi
+
+    while phi:
+        quotient = e // phi
+        e, phi = phi, e % phi
+        x1, x2 = x2 - quotient * x1, x1
+
+    if e != 1:
+        raise ValueError("Мультипликативная инверсия не существует")
+
+    d = x2 % original_phi
+    if d < 0:
+        d += original_phi
+
+    return d
 
 
-def generate_keypair(
-    p: int, q: int
-) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
+def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
     if not (is_prime(p) and is_prime(q)):
         raise ValueError("Both numbers must be prime.")
     elif p == q:
