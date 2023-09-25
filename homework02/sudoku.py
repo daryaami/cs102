@@ -1,3 +1,4 @@
+import time
 import pathlib
 import random
 import typing as tp
@@ -25,7 +26,8 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     width = 2
     line = "+".join(["-" * (width * 3)] * 3)
     for row in range(9):
-        print("".join(grid[row][col].center(width) + ("|" if str(col) in "25" else "") for col in range(9)))
+        print("".join(grid[row][col].center(width) +
+              ("|" if str(col) in "25" else "") for col in range(9)))
         if str(row) in "25":
             print(line)
     print()
@@ -39,7 +41,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    return [values[i * n : (i + 1) * n] for i in range(n)]
+    return [values[i * n: (i + 1) * n] for i in range(n)]
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -63,7 +65,7 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    return [grid[i][pos[1]] for i in range(9)]
+    return [row[pos[1]] for row in grid]
 
 
 def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -197,8 +199,6 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
 
     return grid
 
-
-import time
 
 if __name__ == "__main__":
     for filename in ("puzzle1.txt", "puzzle2.txt", "puzzle3.txt"):
