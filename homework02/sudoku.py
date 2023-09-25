@@ -93,8 +93,8 @@ def find_empty_positions(
     >>> find_empty_positions([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']])
     (2, 0)
     """
-    for i in range(9):
-        for j in range(9):
+    for i, row in enumerate(grid):
+        for j, col in enumerate(row):
             if grid[i][j] == ".":
                 return (i, j)
     return None
