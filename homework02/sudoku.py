@@ -200,14 +200,19 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     return grid
 
 
+import time
+
 if __name__ == "__main__":
-    for fname in ["puzzle1.txt", "puzzle2.txt", "puzzle3.txt"]:
-        grid = read_sudoku(fname)
+    for filename in ("puzzle1.txt", "puzzle2.txt", "puzzle3.txt"):
+        grid = read_sudoku(filename)
         display(grid)
+        start = time.time()
         solution = solve(grid)
+        end = time.time()
         if not solution:
-            print(f"Puzzle {fname} can't be solved")
+            print(f"Puzzle {filename} can't be solved")
         else:
             display(solution)
             is_correct = check_solution(solution)
-            print('Solution is correct\n' if is_correct else 'Ooops...\n')
+            print('Solution is correct' if is_correct else 'Ooops...')
+        print(f"{filename}: {end-start}\n")
