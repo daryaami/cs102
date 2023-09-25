@@ -1,5 +1,6 @@
 import pathlib
 import typing as tp
+import random
 
 T = tp.TypeVar("T")
 
@@ -41,7 +42,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    return [values[i * n : (i + 1) * n] for i in range(n)]
+    return [values[i * n: (i + 1) * n] for i in range(n)]
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -135,21 +136,33 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
 
     row, col = empty_position
     posible_values = find_possible_values(grid, empty_position)
-
+    
     if posible_values:
         for opt in posible_values:
             grid[row][col] = opt
             if solve(grid):
                 return grid
             grid[row][col] = '.'
-    
+
     return None
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
-    # TODO: Add doctests with bad puzzles
-    pass
+    numbers = {'1', '2', '3', '4', '5', '6', '7', '8', '9'}
+    for row in solution:
+        if set(row) != numbers:
+            return False
+    for c in range(9):
+        col = get_col(solution, (0, c))
+        if set(col) != numbers:
+            return False
+    for r in range(0, 9, 3):
+        for c in range(0, 9, 3):
+            block = get_block(solution, (r, c))
+            if set(block) != numbers:
+                return False
+    return True
 
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
@@ -173,7 +186,18 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    pass
+    grid = group(['.' for _ in range(81)], 9)
+
+    solve(grid)
+
+    empty_cells = 81 - N
+    positions = [(r, c) for r in range(9) for c in range(9)]
+    random.shuffle(positions)
+
+    for row, col in positions[:empty_cells]:
+        grid[row][col] = '.'
+
+    return grid
 
 
 if __name__ == "__main__":
@@ -185,3 +209,5 @@ if __name__ == "__main__":
             print(f"Puzzle {fname} can't be solved")
         else:
             display(solution)
+            is_correct = check_solution(solution)
+            print('Solution is correct\n' if is_correct else 'Ooops...\n')
