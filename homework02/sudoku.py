@@ -1,6 +1,6 @@
-import time
 import pathlib
 import random
+import time
 import typing as tp
 
 T = tp.TypeVar("T")
