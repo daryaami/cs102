@@ -1,6 +1,7 @@
 import copy
 import pathlib
 import random
+import math
 import typing as tp
 
 import pygame
@@ -16,7 +17,7 @@ class GameOfLife:
         self,
         size: tp.Tuple[int, int],
         randomize: bool = True,
-        max_generations: tp.Optional[float] = float("inf"),
+        max_generations: tp.Optional[float] = math.inf,
     ) -> None:
         # Размер клеточного поля
         self.rows, self.cols = size
@@ -81,7 +82,7 @@ class GameOfLife:
         """
         Не превысило ли текущее число поколений максимально допустимое.
         """
-        return self.generations >= float(self.max_generations)
+        return self.generations >= self.max_generations
 
     @property
     def is_changing(self) -> bool:
