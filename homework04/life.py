@@ -1,7 +1,7 @@
 import copy
+import math
 import pathlib
 import random
-import math
 import typing as tp
 
 import pygame
