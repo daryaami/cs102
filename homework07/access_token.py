@@ -1,6 +1,6 @@
 import argparse
 import webbrowser
-
+from vkapi.config import VK_CONFIG
 
 def get_access_token(client_id: int, scope: str) -> None:
     assert isinstance(client_id, int), "clinet_id must be positive integer"
@@ -27,3 +27,5 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     get_access_token(args.client_id, args.scope)
+
+# python access_token.py 51824393 -s friends,wall
