@@ -87,7 +87,7 @@ class GameOfLife:
             grid: Grid = [[0 for j in range(self.cell_width)] for i in range(self.cell_height)]
             return grid
 
-        grid = [[random.randint(0, 1) for _ in range(self.cell_width)]for _ in range(self.cell_height)]
+        grid = [[random.randint(0, 1) for _ in range(self.cell_width)] for _ in range(self.cell_height)]
         return grid
 
     def draw_grid(self) -> None:

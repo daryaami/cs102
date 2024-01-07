@@ -75,7 +75,7 @@ class GUI(UI):
                 col = position[0] // self.cell_size
                 row = position[1] // self.cell_size
 
-                self.life.curr_generation[row][col] = (1 - self.life.curr_generation[row][col])
+                self.life.curr_generation[row][col] = 1 - self.life.curr_generation[row][col]
 
             if event.type == KEYDOWN and event.key == pygame.K_s:
                 path_dir = os.path.dirname(__file__)
