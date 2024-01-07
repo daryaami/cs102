@@ -33,16 +33,18 @@ class GameOfLife:
         self.grid = self.create_grid(True)
 
     def draw_lines(self) -> None:
-        """ Отрисовать сетку """
+        """Отрисовать сетку"""
         for x in range(0, self.width, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color(
-                "black"), (x, 0), (x, self.height))
+            pygame.draw.line(
+                self.screen, pygame.Color("black"), (x, 0), (x, self.height)
+            )
         for y in range(0, self.height, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color(
-                "black"), (0, y), (self.width, y))
+            pygame.draw.line(
+                self.screen, pygame.Color("black"), (0, y), (self.width, y)
+            )
 
     def run(self) -> None:
-        """ Запустить игру """
+        """Запустить игру"""
         pygame.init()
         clock = pygame.time.Clock()
         pygame.display.set_caption("Game of Life")
@@ -88,11 +90,15 @@ class GameOfLife:
             Матрица клеток размером `cell_height` х `cell_width`.
         """
         if randomize == False:
-            grid: Grid = [[0 for j in range(self.cell_width)]
-                          for i in range(self.cell_height)]
+            grid: Grid = [
+                [0 for j in range(self.cell_width)] for i in range(self.cell_height)
+            ]
             return grid
 
-        grid = [[random.randint(0, 1) for _ in range(self.cell_width)] for _ in range(self.cell_height)]
+        grid = [
+            [random.randint(0, 1) for _ in range(self.cell_width)]
+            for _ in range(self.cell_height)
+        ]
         return grid
 
     def draw_grid(self) -> None:
@@ -102,11 +108,27 @@ class GameOfLife:
         for row in range(self.cell_height):
             for col in range(self.cell_width):
                 if self.grid[row][col] == 1:
-                    pygame.draw.rect(self.screen, pygame.Color(
-                        'green'), (col * self.cell_size, row * self.cell_size, self.cell_size, self.cell_size))
+                    pygame.draw.rect(
+                        self.screen,
+                        pygame.Color("green"),
+                        (
+                            col * self.cell_size,
+                            row * self.cell_size,
+                            self.cell_size,
+                            self.cell_size,
+                        ),
+                    )
                 else:
-                    pygame.draw.rect(self.screen, pygame.Color(
-                        'white'), (col * self.cell_size, row * self.cell_size, self.cell_size, self.cell_size))
+                    pygame.draw.rect(
+                        self.screen,
+                        pygame.Color("white"),
+                        (
+                            col * self.cell_size,
+                            row * self.cell_size,
+                            self.cell_size,
+                            self.cell_size,
+                        ),
+                    )
 
     def get_neighbours(self, cell: Cell) -> Cells:
         """
@@ -133,8 +155,7 @@ class GameOfLife:
             for j in range(max(0, col - 1), min(self.cell_width, col + 2))
             if (i, j) != (row, col)
         ]
-        neighbours = [self.grid[n[0]][n[1]]
-                      for n in neighbours_list]
+        neighbours = [self.grid[n[0]][n[1]] for n in neighbours_list]
 
         return neighbours
 
@@ -146,8 +167,9 @@ class GameOfLife:
         out : Grid
             Новое поколение клеток.
         """
-        new_grid: Grid = [[0 for j in range(self.cell_width)]
-                          for i in range(self.cell_height)]
+        new_grid: Grid = [
+            [0 for j in range(self.cell_width)] for i in range(self.cell_height)
+        ]
 
         for row in range(self.cell_height):
             for col in range(self.cell_width):
@@ -162,6 +184,7 @@ class GameOfLife:
 
         return new_grid
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     game = GameOfLife(320, 240, 10)
     game.run()

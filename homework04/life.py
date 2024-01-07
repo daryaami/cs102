@@ -30,14 +30,13 @@ class GameOfLife:
         self.generations = 1
 
     def create_grid(self, randomize: bool = False) -> Grid:
-
         if randomize == False:
-            grid: Grid = [[0 for j in range(self.cols)]
-                          for i in range(self.rows)]
+            grid: Grid = [[0 for j in range(self.cols)] for i in range(self.rows)]
             return grid
 
-        grid = [[random.randint(0, 1) for _ in range(self.cols)]
-                for _ in range(self.rows)]
+        grid = [
+            [random.randint(0, 1) for _ in range(self.cols)] for _ in range(self.rows)
+        ]
         return grid
 
     def get_neighbours(self, cell: Cell) -> Cells:
@@ -50,8 +49,7 @@ class GameOfLife:
             if (i, j) != (row, col)
         ]
 
-        neighbours = [self.curr_generation[n[0]][n[1]]
-                      for n in neighbours_list]
+        neighbours = [self.curr_generation[n[0]][n[1]] for n in neighbours_list]
 
         return neighbours
 
@@ -103,13 +101,11 @@ class GameOfLife:
         """
         Прочитать состояние клеток из указанного файла.
         """
-        with open(filename, 'r') as file:
+        with open(filename, "r") as file:
             lines = file.readlines()
         # Исключаем пустые строки и строки только с пробелами или символами новой строки
         state: Grid = [
-            [int(char) for char in line.rstrip()]
-            for line in lines
-            if line.strip()
+            [int(char) for char in line.rstrip()] for line in lines if line.strip()
         ]
         size = (len(state), len(state[0]))
         game = GameOfLife(size)
@@ -120,7 +116,7 @@ class GameOfLife:
         """
         Сохранить текущее состояние клеток в указанный файл.
         """
-        with open(filename, 'w') as file:
+        with open(filename, "w") as file:
             for row in self.curr_generation:
-                row_str = ''.join(str(cell) for cell in row)
-                file.write(row_str + '\n')
+                row_str = "".join(str(cell) for cell in row)
+                file.write(row_str + "\n")

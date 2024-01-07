@@ -26,13 +26,15 @@ class GUI(UI):
         super().__init__(life)
 
     def draw_lines(self) -> None:
-        """ Отрисовать сетку """
+        """Отрисовать сетку"""
         for x in range(0, self.width, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color(
-                "black"), (x, 0), (x, self.height))
+            pygame.draw.line(
+                self.screen, pygame.Color("black"), (x, 0), (x, self.height)
+            )
         for y in range(0, self.height, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color(
-                "black"), (0, y), (self.width, y))
+            pygame.draw.line(
+                self.screen, pygame.Color("black"), (0, y), (self.width, y)
+            )
 
     def draw_grid(self) -> None:
         """
@@ -41,12 +43,28 @@ class GUI(UI):
         for row in range(self.life.rows):
             for col in range(self.life.cols):
                 if self.life.curr_generation[row][col] == 1:
-                    pygame.draw.rect(self.screen, pygame.Color(
-                        'green'), (col*self.cell_size, row*self.cell_size, self.cell_size, self.cell_size))
+                    pygame.draw.rect(
+                        self.screen,
+                        pygame.Color("green"),
+                        (
+                            col * self.cell_size,
+                            row * self.cell_size,
+                            self.cell_size,
+                            self.cell_size,
+                        ),
+                    )
                 else:
-                    pygame.draw.rect(self.screen, pygame.Color(
-                        'white'), (col*self.cell_size, row*self.cell_size, self.cell_size, self.cell_size))
-    
+                    pygame.draw.rect(
+                        self.screen,
+                        pygame.Color("white"),
+                        (
+                            col * self.cell_size,
+                            row * self.cell_size,
+                            self.cell_size,
+                            self.cell_size,
+                        ),
+                    )
+
     def handle_events(self) -> None:
         for event in pygame.event.get():
             if event.type == QUIT or self.life.is_max_generations_exceeded:
@@ -61,22 +79,26 @@ class GUI(UI):
                 col = position[0] // self.cell_size
                 row = position[1] // self.cell_size
 
-                self.life.curr_generation[row][col] = 1 - self.life.curr_generation[row][col]
-            
+                self.life.curr_generation[row][col] = (
+                    1 - self.life.curr_generation[row][col]
+                )
+
             if event.type == KEYDOWN and event.key == pygame.K_s:
                 path_dir = os.path.dirname(__file__)
                 directory = os.path.join(path_dir, "saved")
                 if not os.path.exists(directory):
                     os.makedirs(directory)
-                self.life.save(os.path.join(directory, f"life_gen{self.life.generations}.txt"))
+                self.life.save(
+                    os.path.join(directory, f"life_gen{self.life.generations}.txt")
+                )
 
     def run(self) -> None:
-        """ Запустить игру """
+        """Запустить игру"""
         pygame.init()
         clock = pygame.time.Clock()
         pygame.display.set_caption("Game of Life")
         self.screen.fill(pygame.Color("white"))
-        
+
         self.running = True
         while self.running:
             self.handle_events()
@@ -95,6 +117,7 @@ class GUI(UI):
             clock.tick(self.speed)
         self.life.curr_generation = self.life.create_grid()
         pygame.quit()
+
 
 life = GameOfLife((30, 40), False)
 gui = GUI(life, 20)
