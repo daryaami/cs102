@@ -1,10 +1,13 @@
+import sys
 import dataclasses
 import math
 import time
 import typing as tp
+from tqdm import tqdm
 
-from vkapi import config, session
-from vkapi.exceptions import APIError
+from vkapi.config import VK_CONFIG
+from vkapi.session import Session
+# from vkapi.exceptions import APIError
 
 QueryParams = tp.Optional[tp.Dict[str, tp.Union[str, int]]]
 
@@ -28,7 +31,22 @@ def get_friends(
     :param fields: Список полей, которые нужно получить для каждого пользователя.
     :return: Список идентификаторов друзей пользователя или список пользователей.
     """
-    pass
+    domain = VK_CONFIG["domain"]
+    access_token = VK_CONFIG["access_token"]
+    v = VK_CONFIG["version"]
+    user_id = user_id
+    fields = fields
+    count = count
+
+    s = Session(base_url=domain)
+    response = s.get('friends.get', {
+        'access_token': access_token, 'count': count, 'user_id': user_id, 'fields': fields, 'v': v}).json()
+    if 'error' in response:
+        raise Exception(response['error']['error_msg'])
+
+    friends_response = FriendsResponse(
+        response['response']['count'], response['response']['items'])
+    return friends_response
 
 
 class MutualFriends(tp.TypedDict):
@@ -57,4 +75,32 @@ def get_mutual(
     :param offset: Смещение, необходимое для выборки определенного подмножества общих друзей.
     :param progress: Callback для отображения прогресса.
     """
-    pass
+
+    s = Session(base_url=VK_CONFIG['domain'])
+
+    if not target_uids:
+        if not target_uid:
+            return []
+        try:
+            common_friends: MutualFriends = s.get('friends.getMutual', {'access_token': VK_CONFIG['access_token'], 'source_uid': source_uid,
+                                                  'target_uid': target_uid, 'count': count, 'v': VK_CONFIG['version'], 'order': order, 'offset': offset}).json()
+            return common_friends['response']
+        except:
+            return []
+        
+    if not progress:
+        progress = tqdm
+    
+    mutual_friends_list = []
+
+    for uid in progress(target_uids):
+        try:
+            time.sleep(0.001)
+            response = s.get('friends.getMutual', {'access_token': VK_CONFIG['access_token'], 'source_uid': source_uid, 
+                                                   'target_uid': uid, 'count': count, 'v': VK_CONFIG['version'], 'order': order, 'offset': offset}).json()
+            mutual_friends: MutualFriends = {'id': uid, 'common_friends': response['response'], 'common_count': len(response['response'])}
+            mutual_friends_list.append(mutual_friends) 
+        except:
+            pass
+
+    return mutual_friends_list
