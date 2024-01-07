@@ -1,10 +1,9 @@
+import abc
 import curses
 import time
 
 from life import GameOfLife
 from ui import UI
-
-import abc
 
 
 class UI(abc.ABC):

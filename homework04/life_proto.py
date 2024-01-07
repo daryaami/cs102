@@ -1,6 +1,4 @@
-from pprint import pprint as pp
 import random
-import copy
 import typing as tp
 
 import pygame
@@ -51,7 +49,6 @@ class GameOfLife:
         self.screen.fill(pygame.Color("white"))
 
         # Создание списка клеток
-
         running = True
         while running:
             for event in pygame.event.get():
@@ -106,10 +103,10 @@ class GameOfLife:
             for col in range(self.cell_width):
                 if self.grid[row][col] == 1:
                     pygame.draw.rect(self.screen, pygame.Color(
-                        'green'), (col*self.cell_size, row*self.cell_size, self.cell_size, self.cell_size))
+                        'green'), (col * self.cell_size, row * self.cell_size, self.cell_size, self.cell_size))
                 else:
                     pygame.draw.rect(self.screen, pygame.Color(
-                        'white'), (col*self.cell_size, row*self.cell_size, self.cell_size, self.cell_size))
+                        'white'), (col * self.cell_size, row * self.cell_size, self.cell_size, self.cell_size))
 
     def get_neighbours(self, cell: Cell) -> Cells:
         """
