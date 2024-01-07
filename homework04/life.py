@@ -81,18 +81,14 @@ class GameOfLife:
         """
         Не превысило ли текущее число поколений максимально допустимое.
         """
-        if self.generations >= self.max_generations:
-            return True
-        return False
+        return self.generations >= float(self.max_generations)
 
     @property
     def is_changing(self) -> bool:
         """
         Изменилось ли состояние клеток с предыдущего шага.
         """
-        if self.curr_generation == self.prev_generation:
-            return False
-        return True
+        return self.curr_generation != self.prev_generation
 
     @staticmethod
     def from_file(filename: pathlib.Path) -> "GameOfLife":

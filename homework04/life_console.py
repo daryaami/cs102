@@ -1,18 +1,8 @@
-import abc
 import curses
 import time
 
 from life import GameOfLife
 from ui import UI
-
-
-class UI(abc.ABC):
-    def __init__(self, life: GameOfLife) -> None:
-        self.life = life
-
-    @abc.abstractmethod
-    def run(self) -> None:
-        pass
 
 
 class Console(UI):

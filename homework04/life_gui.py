@@ -1,4 +1,5 @@
 import os
+import pathlib
 
 import pygame
 from life import GameOfLife
@@ -82,7 +83,7 @@ class GUI(UI):
                 directory = os.path.join(path_dir, "saved")
                 if not os.path.exists(directory):
                     os.makedirs(directory)
-                self.life.save(os.path.join(directory, f"life_gen{self.life.generations}.txt"))
+                self.life.save(pathlib.Path(os.path.join(directory, f"life_gen{self.life.generations}.txt")))
 
     def run(self) -> None:
         """Запустить игру"""
