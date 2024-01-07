@@ -28,13 +28,9 @@ class GUI(UI):
     def draw_lines(self) -> None:
         """Отрисовать сетку"""
         for x in range(0, self.width, self.cell_size):
-            pygame.draw.line(
-                self.screen, pygame.Color("black"), (x, 0), (x, self.height)
-            )
+            pygame.draw.line(self.screen, pygame.Color("black"), (x, 0), (x, self.height))
         for y in range(0, self.height, self.cell_size):
-            pygame.draw.line(
-                self.screen, pygame.Color("black"), (0, y), (self.width, y)
-            )
+            pygame.draw.line(self.screen, pygame.Color("black"), (0, y), (self.width, y))
 
     def draw_grid(self) -> None:
         """
@@ -79,18 +75,14 @@ class GUI(UI):
                 col = position[0] // self.cell_size
                 row = position[1] // self.cell_size
 
-                self.life.curr_generation[row][col] = (
-                    1 - self.life.curr_generation[row][col]
-                )
+                self.life.curr_generation[row][col] = (1 - self.life.curr_generation[row][col])
 
             if event.type == KEYDOWN and event.key == pygame.K_s:
                 path_dir = os.path.dirname(__file__)
                 directory = os.path.join(path_dir, "saved")
                 if not os.path.exists(directory):
                     os.makedirs(directory)
-                self.life.save(
-                    os.path.join(directory, f"life_gen{self.life.generations}.txt")
-                )
+                self.life.save(os.path.join(directory, f"life_gen{self.life.generations}.txt"))
 
     def run(self) -> None:
         """Запустить игру"""

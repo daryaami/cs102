@@ -34,9 +34,7 @@ class GameOfLife:
             grid: Grid = [[0 for j in range(self.cols)] for i in range(self.rows)]
             return grid
 
-        grid = [
-            [random.randint(0, 1) for _ in range(self.cols)] for _ in range(self.rows)
-        ]
+        grid = [[random.randint(0, 1) for _ in range(self.cols)] for _ in range(self.rows)]
         return grid
 
     def get_neighbours(self, cell: Cell) -> Cells:
@@ -104,9 +102,7 @@ class GameOfLife:
         with open(filename, "r") as file:
             lines = file.readlines()
         # Исключаем пустые строки и строки только с пробелами или символами новой строки
-        state: Grid = [
-            [int(char) for char in line.rstrip()] for line in lines if line.strip()
-        ]
+        state: Grid = [[int(char) for char in line.rstrip()] for line in lines if line.strip()]
         size = (len(state), len(state[0]))
         game = GameOfLife(size)
         game.curr_generation = state
